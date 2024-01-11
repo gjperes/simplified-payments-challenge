@@ -1,10 +1,10 @@
-package gjperes.desafiobackendpp;
+package gjperes.simplifiedpayments;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DesafioBackendPpApplicationTests {
+class SimplifiedPaymentsApplicationTests {
 
 	@Test
 	void contextLoads() {

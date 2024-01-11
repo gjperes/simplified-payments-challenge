@@ -1,4 +1,4 @@
-package gjperes.desafiobackendpp;
+package gjperes.simplifiedpayments;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -8,7 +8,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
 
 @TestConfiguration(proxyBeanMethods = false)
-public class TestDesafioBackendPpApplication {
+public class TestSimplifiedPaymentsApplication {
 
 	@Bean
 	@ServiceConnection
@@ -17,7 +17,7 @@ public class TestDesafioBackendPpApplication {
 	}
 
 	public static void main(String[] args) {
-		SpringApplication.from(DesafioBackendPpApplication::main).with(TestDesafioBackendPpApplication.class).run(args);
+		SpringApplication.from(SimplifiedPaymentsApplication::main).with(SimplifiedPaymentsApplication.class).run(args);
 	}
 
 }

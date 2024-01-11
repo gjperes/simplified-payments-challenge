@@ -1,0 +1,11 @@
+POST http://localhost:8080/api/v1/payment
+Content-Type: application/json
+
+{
+  "amount": 250.20,
+  "payer": 1,
+  "payee": 2,
+  "expiresAt": "2024-01-11T17:33:23.325Z"
+}
+
+###
