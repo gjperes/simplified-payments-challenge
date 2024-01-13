@@ -1,6 +1,7 @@
 package gjperes.simplifiedpayments.payment;
 
 import gjperes.simplifiedpayments.external.TransactionAuthorizationService;
+import gjperes.simplifiedpayments.user.User;
 import gjperes.simplifiedpayments.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,22 +25,12 @@ public class PaymentService {
 
     @Transactional
     public PaymentResponse transfer(@NonNull @Valid PaymentPayload payload) {
-        log.info("[creating] {}", payload);
+        log.info("[creating] transfer {}", payload);
 
-        boolean payerExists = userService.userExistsById(payload.payer());
-        boolean payeeExists = userService.userExistsById(payload.payee());
+        User payer = userService.findUserById(payload.payer()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "payer '" + payload.payer() + "' not valid"));
+        User payee = userService.findUserById(payload.payee()).orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "payee '" + payload.payee() + "' not valid"));
 
-        boolean isPayerValid = payerExists && userService.hasPermissionToPay(payload.payer());
-
-        if (!isPayerValid) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "payer '" + payload.payer() + "' not valid");
-        }
-
-        if (!payeeExists) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "payee '" + payload.payee() + "' not valid");
-        }
-
-        if (!userService.hasSufficientAmount(payload.payer())) {
+        if (!userService.hasSufficientAmount(payer)) {
             throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "unsufficient fund amount");
         }
 
